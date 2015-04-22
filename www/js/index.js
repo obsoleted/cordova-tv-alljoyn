@@ -59,10 +59,15 @@ var app = {
         console.log('Connecting to bus');
         app.displayStatus('Connecting to bus...');
         if (AllJoyn) {
-            AllJoyn.connect(app.onBusConnected, app.getFailureFor('AllJoyn.connect'));
+            AllJoyn.connect(app.onBusConnected, app.onBusError);
         } else {
             console.log('Error: AllJoyn not found. (Is the plugin installed?)');
         }
+    },
+    onBusError: function(error) {
+        console.log("Error connecting to bus or got disconnected! [" + JSON.stringify(arguments) + "]");
+        app.bus = null;
+        app.onDeviceReady();
     },
     onBusConnected: function(bus) {
         app.bus = bus;
