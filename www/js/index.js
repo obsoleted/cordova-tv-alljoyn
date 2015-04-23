@@ -72,6 +72,8 @@ var app = {
     onBusConnected: function(bus) {
         app.bus = bus;
 
+        bus.addConnectionErrorListener(app.onBusError);
+
         var appObjects = [{
                 path: "/info",
                 interfaces: [
